@@ -1,0 +1,19 @@
+{% extends 'user/layout.html' %}
+
+{% block body %}
+<h2>Welcome to the User Index Page</h2>
+<p>Your User ID is: {{ user.id }}</p>
+<p>Your Username is: {{ user.username }}</p>
+<p>Your Phone Number is: {{ user.phone_number }}</p>
+<p>Your Money Left is: {{ user.money_left }}đ</p>
+<button><a href="{% url 'user:logout' %}">Logout</a></button>
+<h3>Menu: </h3>
+<ul>
+    {% for item in menu %}
+        <li>
+            <img src="{{ item.picture }}" alt="{{ item.name }}" width="100" height="100">
+            <p>{{ item.name }} - {{ item.price }}đ</p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
