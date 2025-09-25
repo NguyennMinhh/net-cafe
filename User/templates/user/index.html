@@ -16,4 +16,9 @@
         </li>
     {% endfor %}
 </ul>
+<!-- Tạo session mới -->
+<form method="post" action="{% url 'user:session' %}">
+  {% csrf_token %}
+  <button type="submit" name="start_session">Start Playing</button>
+</form>
 {% endblock %}

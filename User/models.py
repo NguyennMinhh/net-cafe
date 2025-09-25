@@ -20,8 +20,9 @@ class Session(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(blank=True, null=True)
-    price_per_hour = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    price_per_hour = models.DecimalField(max_digits=10, decimal_places=2, default=10000)
+    cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"Session of {self.user.username} - Active: {self.is_active}"
+        return f"{self.user.username} - Active: {self.is_active}"
