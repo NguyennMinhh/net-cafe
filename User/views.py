@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from .models import Menu, Session
 from decimal import Decimal
+from .forms import *
 
 # Create your views here.
 def index(request):
@@ -28,6 +29,18 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('user:login')
+
+def register_view(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            return redirect('user:login')
+    else:
+        form = RegisterForm()
+    return render(request, 'user/register.html', {'form': form})
 
 def session_view(request):
     if not request.user.is_authenticated:
