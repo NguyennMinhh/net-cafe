@@ -23,6 +23,20 @@ class Session(models.Model):
     price_per_hour = models.DecimalField(max_digits=10, decimal_places=2, default=10000)
     cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     is_active = models.BooleanField(default=True)
+    pc = models.ForeignKey
 
     def __str__(self):
         return f"{self.user.username} - Active: {self.is_active}"
+
+# Quản lý máy tính:
+class NetComputer(models.Model):
+    name = models.CharField(max_length=100)
+    status = models.BooleanField(default=True)
+    price_per_hour = models.DecimalField(max_digits=10, decimal_places=2, default=10000)
+    graphics_card = models.CharField(max_length=100)
+    ram = models.CharField(max_length=100)
+    cpu = models.CharField(max_length=100)
+    storage = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name} - {'Available' if self.status else 'In Use'} - {self.price_per_hour}đ/Hour"

@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
-from .models import Menu, User, Session
+from .models import Menu, User, Session, NetComputer
 
 # Đăng ký Menu bình thường
 admin.site.register(Menu)
 admin.site.register(Session)
+admin.site.register(NetComputer)
 
 # Đăng ký User với UserAdmin tuỳ biến, bao gồm các trường bổ sung và mã hoá mật khẩu khi tạo tài khoản trên admin
 @admin.register(User)
