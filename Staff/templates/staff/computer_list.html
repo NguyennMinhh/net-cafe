@@ -5,6 +5,15 @@
 <button>
     <a style="text-decoration: none; color: black" href="{% url 'staff:computer_list_add' %}" class="btn">Add Computer</a>
 </button>
+<form method="get" action="{% url 'staff:computer_list' %}">
+    <select name="computer_type_id">
+        <option value="">All Types</option>
+    {% for computer in computer_types %}
+        <option value="{{ computer.id }}">{{ computer.name }}</option>
+    {% endfor %}
+    </select>
+    <button type="submit" name="filter">Filter</button>
+</form>
 <table border="2" style="border-collapse: collapse;">
     <thead>
         <tr>

@@ -62,8 +62,13 @@ def delete_computer(request, computer_id):
 
 # Computer List
 def computer_list(request):
+    type_id = request.GET.get('computer_type_id')
+    computer_ls = ComputerList.objects.all()
+    if type_id:
+        computer_ls = computer_ls.filter(computer_type_id=type_id)
     return render(request, 'staff/computer_list.html', {
-        "computer_list": ComputerList.objects.all(),
+        "computer_list": computer_ls,
+        "computer_types": ComputerType.objects.all(),
         "form": AddComputerListForm()
     })
 def computer_list_add(request):
