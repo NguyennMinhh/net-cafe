@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from .models import Menu, Session
+from .models import *
 from decimal import Decimal
 from .forms import *
 

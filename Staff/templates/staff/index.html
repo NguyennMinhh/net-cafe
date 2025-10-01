@@ -1,0 +1,13 @@
+{% extends 'user/layout.html' %}
+
+{% block body %}
+    <h2>Welcome to the Staff Index Page</h2>
+    <p>This is the staff dashboard. Use the navigation bar to manage computers and view reports.</p>
+    <button>
+        <a style="text-decoration: none; color: black" href="{% url 'staff:computer_list' %}" class="btn">Add Computer</a>
+    </button>
+    <br> <br>
+    <button>
+        <a style="text-decoration: none; color: black" href="{% url 'staff:computer_types' %}" class="btn">Add Computer Type</a>
+    </button>
+{% endblock %}

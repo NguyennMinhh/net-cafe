@@ -1,0 +1,50 @@
+{% extends 'user/layout.html' %}
+
+{% block body %}
+<h3>Manage Computers Types</h3>
+<table border="2" style="border-collapse: collapse;">
+    <thead>
+        <tr>
+            {% for field in form %}
+                <th>
+                    {{ field.label }}
+                </th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for computer in computers %}
+        <tr>
+            <td>{{ computer.name }}</td>
+            <td>{{ computer.status }}</td>
+            <td>{{ computer.price_per_hour }}</td>
+            <td>{{ computer.graphics_card }}</td>
+            <td>{{ computer.ram }}</td>
+            <td>{{ computer.cpu }}</td>
+            <td>{{ computer.storage }}</td>
+            <td style="border: 0;">
+                <button><a href="{% url 'staff:edit_computer' computer.id %}" class="btn">Edit</a></button>
+            </td>
+            <td style="border: 0;">
+                <button><a href="{% url 'staff:delete_computer' computer.id %}" class="btn">Delete</a></button>
+            </td>
+        </tr>
+        {% endfor %}
+        <form method="post" action="{% url 'staff:computer_types' %}">
+            {% csrf_token %}
+            <tr>
+                {% for field in AddComputerTypeForm %}
+                <td>
+                    {{ field }}
+                </td>
+                {% endfor %}
+                <td style="border: 0;">
+                    <button type="submit">
+                        Add
+                    </button>
+                </td>
+            </tr>
+        </form>
+    </tbody>
+</table>
+{% endblock %}
