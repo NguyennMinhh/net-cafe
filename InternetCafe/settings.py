@@ -34,6 +34,7 @@ AUTH_USER_MODEL = "User.User"
 
 INSTALLED_APPS = [
     'User',
+    'Staff',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

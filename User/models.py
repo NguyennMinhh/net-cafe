@@ -15,21 +15,9 @@ class Menu(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.price}đ"
-    
-class Session(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    start_time = models.DateTimeField(auto_now_add=True)
-    end_time = models.DateTimeField(blank=True, null=True)
-    price_per_hour = models.DecimalField(max_digits=10, decimal_places=2, default=10000)
-    cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    is_active = models.BooleanField(default=True)
-    pc = models.ForeignKey
 
-    def __str__(self):
-        return f"{self.user.username} - Active: {self.is_active}"
-
-# Quản lý máy tính:
-class NetComputer(models.Model):
+# Quản lý các loại máy tính:
+class ComputerType(models.Model):
     name = models.CharField(max_length=100)
     status = models.BooleanField(default=True)
     price_per_hour = models.DecimalField(max_digits=10, decimal_places=2, default=10000)
@@ -37,6 +25,26 @@ class NetComputer(models.Model):
     ram = models.CharField(max_length=100)
     cpu = models.CharField(max_length=100)
     storage = models.CharField(max_length=100)
+    def __str__(self):
+        return f"{self.name}"
+
+# Quản lý các máy tính cụ thể:
+class ComputerList(models.Model):
+    name = models.CharField(max_length=100)
+    computer_type = models.ForeignKey(ComputerType, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.name} - Type: {self.computer_type.name} - {'Active' if self.is_active else 'Inactive'}"
+    
+# Quản lý các phiên sử dụng máy tính của người dùng:
+class Session(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    start_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField(blank=True, null=True)
+    price_per_hour = models.DecimalField(max_digits=10, decimal_places=2, default=10000)
+    cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    is_active = models.BooleanField(default=True)
+    pc = models.ForeignKey(ComputerList, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.name} - {'Available' if self.status else 'In Use'} - {self.price_per_hour}đ/Hour"
+        return f"{self.user.username} - Active: {self.is_active}"

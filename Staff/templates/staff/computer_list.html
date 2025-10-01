@@ -1,0 +1,35 @@
+{% extends 'user/layout.html' %}
+
+{% block body %}
+<h2>Manage Computer List</h2>
+<button>
+    <a style="text-decoration: none; color: black" href="{% url 'staff:computer_list_add' %}" class="btn">Add Computer</a>
+</button>
+<table border="2" style="border-collapse: collapse;">
+    <thead>
+        <tr>
+            {% for field in form %}
+                <th>{{ field.label }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for computer in computer_list %}
+        <tr>
+            <td>{{ computer.name }}</td>
+            <td>
+                <a style="text-decoration: none; color: black" href="{% url 'staff:computer_types' %}">{{ computer.computer_type }}</a>
+            </td>
+            <td>{{ computer.is_active }}</td>
+            <td style="border: 0;">
+                <button><a style="text-decoration: none; color: black" href="{% url 'staff:computer_list_edit' computer.id %}" class="btn">Edit</a></button>
+            </td>
+            <td style="border: 0;">
+                <button><a style="text-decoration: none; color: black" href="{% url 'staff:computer_list_delete' computer.id %}" class="btn">Delete</a></button>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+{% endblock %}
