@@ -42,23 +42,26 @@ def add_computer(request):
 def edit_computer(request, computer_id):
     computer = ComputerType.objects.get(id=computer_id)
     if request.method == 'POST':
-        computer.name = request.POST.get('name')
-        computer.price_per_hour = request.POST.get('price_per_hour')
-        computer.graphics_card = request.POST.get('graphics_card')
-        computer.ram = request.POST.get('ram')
-        computer.cpu = request.POST.get('cpu')
-        computer.storage = request.POST.get('storage')
-        computer.status = 'status' in request.POST
-        computer.save()
-        return redirect('staff:computer_types')
-    return render(request, 'staff/edit_computer.html', {
+        form = EditComputerTypeForm(request.POST, instance=computer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Edited Computer")
+            return redirect('staff:computer_types')
+    return render(request, 'staff/computer_types_edit.html', {
         "computer": computer,
+        "form": EditComputerTypeForm(instance=computer)
     })
 
 def delete_computer(request, computer_id):
     computer = ComputerType.objects.get(id=computer_id)
     computer.delete()
     return redirect('staff:computer_types')
+
+def view_computer_type(request, computer_id):
+    computer = ComputerType.objects.get(id=computer_id)
+    return render(request, 'staff/view_computer_type.html', {
+        "computer": computer
+    })
 
 # Computer List
 def computer_list(request):

@@ -1,0 +1,10 @@
+{% extends 'user/layout.html' %}
+
+{% block body %}
+<h2>Computer Types Info</h2>
+<form method="post" action="{% url 'staff:edit_computer' computer.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Computer Types</button>
+</form>
+{% endblock %}

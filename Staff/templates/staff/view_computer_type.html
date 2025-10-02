@@ -1,0 +1,13 @@
+{% extends 'user/layout.html' %}
+
+{% block body %}
+<h2>Computer Type Details</h2>
+<p><strong>Name:</strong> {{ computer.name }}</p>
+<p><strong>Status:</strong> {{ computer.status }}</p>
+<p><strong>Price per Hour:</strong> {{ computer.price_per_hour }}</p>
+<p><strong>Graphics Card:</strong> {{ computer.graphics_card }}</p>
+<p><strong>RAM:</strong> {{ computer.ram }}</p>
+<p><strong>CPU:</strong> {{ computer.cpu }}</p>
+<p><strong>Storage:</strong> {{ computer.storage }}</p>
+<p><strong>Description:</strong> {{ computer.description }}</p>
+{% endblock %}

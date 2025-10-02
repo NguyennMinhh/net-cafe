@@ -5,17 +5,21 @@
 <table border="2" style="border-collapse: collapse;">
     <thead>
         <tr>
-            {% for field in form %}
-                <th>
-                    {{ field.label }}
-                </th>
-            {% endfor %}
+            <td>{{ form.name }}</td>
+            <td>{{ form.status }}</td>
+            <td>{{ form.price_per_hour }}</td>
+            <td>{{ form.graphics_card }}</td>
+            <td>{{ form.ram }}</td>
+            <td>{{ form.cpu }}</td>
+            <td>{{ form.storage }}</td>
         </tr>
     </thead>
     <tbody>
         {% for computer in computers %}
         <tr>
-            <td>{{ computer.name }}</td>
+            <td>
+                <a style="text-decoration: none; color: black" href="{% url 'staff:view_computer_type' computer.id %}">{{ computer.name }}</a>
+            </td>
             <td>{{ computer.status }}</td>
             <td>{{ computer.price_per_hour }}</td>
             <td>{{ computer.graphics_card }}</td>

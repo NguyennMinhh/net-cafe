@@ -6,6 +6,11 @@ class AddComputerTypeForm(forms.ModelForm):
         model = ComputerType
         fields = ['name', 'status', 'price_per_hour', 'graphics_card', 'ram', 'cpu', 'storage']
 
+class EditComputerTypeForm(forms.ModelForm):
+    class Meta:
+        model = ComputerType
+        fields = ['name', 'status', 'price_per_hour', 'graphics_card', 'ram', 'cpu', 'storage', 'description']
+
 class AddComputerListForm(forms.ModelForm):
     class Meta:
         model = ComputerList
