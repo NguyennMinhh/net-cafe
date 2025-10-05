@@ -13,6 +13,7 @@ def index(request):
     return render(request, 'user/index.html', {
         "user": request.user,
         "menu": Menu.objects.all(),
+        "SelectPCForm": SelectPCForm(),
     })
 
 def login_view(request):
@@ -49,11 +50,21 @@ def session_view(request):
     if request.method == 'POST':
         if 'start_session' in request.POST:
             # tạo object session mới
-            Session.objects.create(user=request.user, start_time=timezone.now())
+            form = SelectPCForm(request.POST)
+            if form.is_valid():
+                pc = form.cleaned_data['pc']
+                pc.is_active = True
+                pc.save()
+            Session.objects.create(user=request.user, start_time=timezone.now(), pc=pc)
             return redirect('user:session')
 
         if 'end_session' in request.POST:
             session = Session.objects.filter(user=request.user, end_time__isnull=True).first()
+            form = SelectPCForm(request.POST)
+            if form.is_valid():
+                pc = form.cleaned_data['pc']
+                pc.is_active = False
+                pc.save()
             if session:
                 session.end_time = timezone.now()
                 # trừ tiền với giá 10k/giờ

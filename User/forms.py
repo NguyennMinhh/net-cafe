@@ -8,3 +8,9 @@ class RegisterForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput(),
         }
+
+class SelectPCForm(forms.Form):
+    pc = forms.ModelChoiceField(
+        queryset=ComputerList.objects.filter(is_active=False), 
+        empty_label="Select a PC"
+    )

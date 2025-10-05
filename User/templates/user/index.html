@@ -19,6 +19,12 @@
 <!-- Tạo session mới -->
 <form method="post" action="{% url 'user:session' %}">
   {% csrf_token %}
+    <label for="pc">Select a Computer:</label>
+    {% if SelectPCForm.pc %}
+        {{ SelectPCForm.pc }}
+    {% else %}
+        <p>No available computers.</p>
+    {% endif %}
   <button type="submit" name="start_session">Start Playing</button>
 </form>
 {% endblock %}

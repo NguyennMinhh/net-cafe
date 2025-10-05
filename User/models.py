@@ -35,17 +35,17 @@ class ComputerList(models.Model):
     computer_type = models.ForeignKey(ComputerType, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=False)
     def __str__(self):
-        return f"{self.name} - Type: {self.computer_type.name} - {'Active' if self.is_active else 'Inactive'}"
+        return f"id:{self.id} {self.name} - Type: {self.computer_type.name} - {'Active' if self.is_active else 'Inactive'}"
     
 # Quản lý các phiên sử dụng máy tính của người dùng:
 class Session(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pc = models.ForeignKey(ComputerList, on_delete=models.CASCADE)
     start_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(blank=True, null=True)
     price_per_hour = models.DecimalField(max_digits=10, decimal_places=2, default=10000)
     cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     is_active = models.BooleanField(default=True)
-    pc = models.ForeignKey(ComputerList, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.user.username} - Active: {self.is_active}"
