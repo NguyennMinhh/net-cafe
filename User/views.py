@@ -49,22 +49,22 @@ def session_view(request):
 
     if request.method == 'POST':
         if 'start_session' in request.POST:
-            # tạo object session mới
             form = SelectPCForm(request.POST)
             if form.is_valid():
                 pc = form.cleaned_data['pc']
                 pc.is_active = True
                 pc.save()
+            else:
+                return redirect('user:index')
+            # tạo object session mới
             Session.objects.create(user=request.user, start_time=timezone.now(), pc=pc)
-            return redirect('user:session')
+            # return redirect('user:session')
+            return render(request, 'user/session.html', {
+                "pc": pc
+            })
 
         if 'end_session' in request.POST:
-            session = Session.objects.filter(user=request.user, end_time__isnull=True).first()
-            form = SelectPCForm(request.POST)
-            if form.is_valid():
-                pc = form.cleaned_data['pc']
-                pc.is_active = False
-                pc.save()
+            session = Session.objects.filter(user=request.user, end_time__isnull=True).select_related('pc').first()
             if session:
                 session.end_time = timezone.now()
                 # trừ tiền với giá 10k/giờ
@@ -74,6 +74,9 @@ def session_view(request):
                 session.cost = Decimal(total_time_played * session.price_per_hour).quantize(Decimal('0.01'))
                 session.is_active = False
                 session.save()
+                # giải phóng máy tính
+                session.pc.is_active = False
+                session.pc.save()
                 # trừ tiền user
                 request.user.money_left -= session.cost
                 request.user.save()

@@ -32,7 +32,7 @@ class ComputerType(models.Model):
 # Quản lý các máy tính cụ thể:
 class ComputerList(models.Model):
     name = models.CharField(max_length=100)
-    computer_type = models.ForeignKey(ComputerType, on_delete=models.CASCADE)
+    computer_type = models.ForeignKey(ComputerType, on_delete=models.PROTECT)
     is_active = models.BooleanField(default=False)
     def __str__(self):
         return f"id:{self.id} {self.name} - Type: {self.computer_type.name} - {'Active' if self.is_active else 'Inactive'}"

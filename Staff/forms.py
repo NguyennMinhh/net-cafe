@@ -14,4 +14,4 @@ class EditComputerTypeForm(forms.ModelForm):
 class AddComputerListForm(forms.ModelForm):
     class Meta:
         model = ComputerList
-        fields = ['name', 'computer_type', 'is_active']
+        fields = ['name', 'computer_type']

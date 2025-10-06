@@ -1,7 +1,7 @@
 {% extends 'user/layout.html' %}
 
 {% block body %}
-    <h2>Playing games</h2>
+    <h2>Playing games on Computer {{ pc.name }}</h2>
     <form method="post" action="{% url 'user:session' %}">
         {% csrf_token %}
         <button type="submit" name="end_session">End Session</button>
