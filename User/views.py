@@ -14,7 +14,20 @@ def index(request):
         "user": request.user,
         "menu": Menu.objects.all(),
         "SelectPCForm": SelectPCForm(),
+        "AddMoneyForm": AddMoneyForm(),
     })
+
+def add_money(request):
+    if not request.user.is_authenticated:
+        return redirect('user:login')
+    if request.method == 'POST':
+        form = AddMoneyForm(request.POST)
+        if form.is_valid():
+            money_to_add = form.cleaned_data.get('amount', '0')
+            request.user.money_left += Decimal(money_to_add)
+            request.user.save()
+            return redirect('user:index')
+    return redirect('user:index')
 
 def login_view(request):
     if request.method == 'POST':

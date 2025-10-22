@@ -23,4 +23,10 @@
     {{ SelectPCForm.pc }}
   <button type="submit" name="start_session">Start Playing</button>
 </form>
+
+<form method="post" action="{% url 'user:add_money' %}">
+  {% csrf_token %}
+    <label>Add Money:</label>
+    {{ AddMoneyForm.amount }}
+  <button type="submit" name="add_money">Add Money</button>
 {% endblock %}
