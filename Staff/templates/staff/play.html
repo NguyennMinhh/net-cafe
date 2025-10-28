@@ -1,0 +1,15 @@
+{% extends 'user/layout.html' %}
+
+{% block body %}
+<h1>Computer number {{computer_id}}</h1>
+<form method="POST">
+    {% csrf_token %}
+    <label>Avaiable Computers: </label>
+    <select id="avaiable_computers">
+        {% for computer in avaiable_computers %}
+            <option value="computer.id">{{computer.name}}</option>
+        {% endfor %}
+    </select>
+    <button> Play </button>
+</form>
+{% endblock %}

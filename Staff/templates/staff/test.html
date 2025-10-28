@@ -1,0 +1,27 @@
+{% extends 'user/layout.html' %}
+
+{% block body %}
+Test Page
+<table border="1">
+    <tr>
+        <th>Tên máy</th>
+        <th>Loại máy</th>
+        <th>Giá</th>
+        <th>Cấu hình</th>
+        <th>Trạng thái</th>
+        <th>Chơi</th>
+        <th>Dùng Chơi</th>
+    </tr>
+    {% for computer in computers_list %}
+        <tr>
+            <td> {{computer.name}} </td>
+            <td> {{computer.computer_type.name}} </td>
+            <td> {{computer.computer_type.price_per_hour}} </td>
+            <td> {{computer.computer_type.graphics_card}} </td>
+            <td> {{computer.is_active}} </td>
+            <td> <a href="{% url 'staff:play' computer.id %}">Play</a> </td>
+            <td> <a href="{% url 'staff:stop' computer.id %}">Stop</a> </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

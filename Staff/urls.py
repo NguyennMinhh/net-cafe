@@ -4,6 +4,10 @@ from . import views as views
 app_name = 'staff'
 urlpatterns = [
     path('', views.index, name='index'),
+    path('test/', views.test, name='test'),
+    path('test/play/<int:computer_id>', views.play, name='play'),
+    path('test/stop/<int:computer_id>', views.stop, name='stop'),
+
     path('edit_computer/<int:computer_id>/', views.edit_computer, name='edit_computer'),
     path('delete_computer/<int:computer_id>/', views.delete_computer, name='delete_computer'),
     path('computer_types/', views.computer_types, name='computer_types'),

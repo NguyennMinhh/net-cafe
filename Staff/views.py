@@ -99,3 +99,23 @@ def computer_list_delete(request, computer_id):
     computer = ComputerList.objects.get(id=computer_id)
     computer.delete()
     return redirect('staff:computer_list')
+
+def test(request):
+    computers_list = ComputerList.objects.all()
+    return render(request, 'staff/test.html', {
+        'computers_list': computers_list,
+    })
+
+def play(request, computer_id):
+    if(request.method == "POST"):
+        pass
+    avaiable_computers = ComputerList.objects.filter(is_active=False)
+    return render(request, 'staff/play.html', {
+        'computer_id': computer_id, 
+        'avaiable_computers': avaiable_computers,
+    })
+
+def stop(request, computer_id):
+    return render(request, 'staff/stop.html', {
+        'computer_id': computer_id
+    })
