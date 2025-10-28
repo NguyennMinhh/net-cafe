@@ -108,7 +108,11 @@ def test(request):
 
 def play(request, computer_id):
     if(request.method == "POST"):
-        pass
+        computer_object = ComputerList.objects.get(id=computer_id)
+        computer_object.is_active = True
+        computer_object.save()
+        return redirect('staff:test')
+    
     avaiable_computers = ComputerList.objects.filter(is_active=False)
     return render(request, 'staff/play.html', {
         'computer_id': computer_id, 
@@ -116,6 +120,11 @@ def play(request, computer_id):
     })
 
 def stop(request, computer_id):
+    if (request.method == "POST"):
+        computer_object = ComputerList.objects.get(id=computer_id)
+        computer_object.is_active = False
+        computer_object.save()
+        return redirect('staff:test')
     return render(request, 'staff/stop.html', {
         'computer_id': computer_id
     })

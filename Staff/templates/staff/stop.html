@@ -1,5 +1,10 @@
 {% extends 'user/layout.html' %}
 
 {% block body %}
-Stopped
+<h1>Are you sure shutting off computer number {{ computer_id }}?</h1>
+<form method="POST">
+    {% csrf_token %}
+    <input value="{{computer_id}}" type="hidden">
+    <button type="submit">Shutdown</button>
+</form>
 {% endblock %}
