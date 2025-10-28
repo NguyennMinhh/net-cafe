@@ -1,7 +1,7 @@
 {% extends 'user/layout.html' %}
 
 {% block body %}
-Test Page
+<h1> Play Table</h1>
 <table border="1">
     <tr>
         <th>Tên máy</th>
@@ -21,6 +21,42 @@ Test Page
             <td> {{computer.is_active}} </td>
             <td> <a href="{% url 'staff:play' computer.id %}">Play</a> </td>
             <td> <a href="{% url 'staff:stop' computer.id %}">Stop</a> </td>
+        </tr>
+    {% endfor %}
+</table>
+
+<h1>Sessions Table</h1>
+<table border="1">
+    <tr>
+        <th>User</th>
+        <th>Computer</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Is Active</th>
+        <th>Cost</th>
+    </tr>
+    {% for session in sessions %}
+        <tr>
+            <td> {{session.user.username}} </td>
+            <td> {{session.pc.name}} </td>
+            <td> {{session.start_time}} </td>
+            <td> {{session.end_time}} </td>
+            <td> {{session.is_active}} </td>
+            <td> {{session.cost}} VNĐ</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<h1>Users Table</h1>
+<table border="1">
+    <tr>
+        <th>username</th>
+        <th>money_left</th>
+    </tr>
+    {% for user in users %}
+        <tr>
+            <td> {{user.username}} </td>
+            <td> {{user.money_left}} </td>
         </tr>
     {% endfor %}
 </table>

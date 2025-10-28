@@ -45,7 +45,7 @@ class Session(models.Model):
     end_time = models.DateTimeField(blank=True, null=True)
     price_per_hour = models.DecimalField(max_digits=10, decimal_places=2, default=10000)
     cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField()
 
     def __str__(self):
         return f"{self.user.username} - Active: {self.is_active}"

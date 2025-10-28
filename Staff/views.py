@@ -1,3 +1,5 @@
+from decimal import Decimal
+from django.utils import timezone
 from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.urls import reverse
 from User.models import ComputerType
@@ -102,13 +104,28 @@ def computer_list_delete(request, computer_id):
 
 def test(request):
     computers_list = ComputerList.objects.all()
+    users = User.objects.all()
+    sessions = Session.objects.all()
     return render(request, 'staff/test.html', {
         'computers_list': computers_list,
+        'users': users,
+        'sessions': sessions
     })
 
 def play(request, computer_id):
+    users = User.objects.all()
     if(request.method == "POST"):
+        user_id = request.POST.get('user')
+        user = User.objects.get(id=user_id)
         computer_object = ComputerList.objects.get(id=computer_id)
+
+        Session.objects.create(
+            user=user, 
+            pc=computer_object, 
+            start_time=timezone.now(), 
+            price_per_hour=computer_object.computer_type.price_per_hour,    
+            is_active=True
+        )
         computer_object.is_active = True
         computer_object.save()
         return redirect('staff:test')
@@ -117,12 +134,28 @@ def play(request, computer_id):
     return render(request, 'staff/play.html', {
         'computer_id': computer_id, 
         'avaiable_computers': avaiable_computers,
+        'users': users
     })
 
 def stop(request, computer_id):
     if (request.method == "POST"):
         computer_object = ComputerList.objects.get(id=computer_id)
+
+        active_session = Session.objects.get(pc=computer_object, is_active=True)
+        active_session.end_time = timezone.now()
         computer_object.is_active = False
+        active_session.is_active = False
+        active_session.end_time = timezone.now()
+        # Tính chi phí
+        total_seconds_played = (active_session.end_time - active_session.start_time).total_seconds()
+        price_per_second = active_session.price_per_hour / Decimal(3600)
+        active_session.cost = Decimal(total_seconds_played) * price_per_second
+        # Trừ tiền người dùng
+        user_object = active_session.user
+        user_object.money_left -= active_session.cost
+        user_object.save()
+        # Lưu lại
+        active_session.save()
         computer_object.save()
         return redirect('staff:test')
     return render(request, 'staff/stop.html', {
