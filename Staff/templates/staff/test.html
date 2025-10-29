@@ -19,8 +19,18 @@
             <td> {{computer.computer_type.price_per_hour}} </td>
             <td> {{computer.computer_type.graphics_card}} </td>
             <td> {{computer.is_active}} </td>
-            <td> <a href="{% url 'staff:play' computer.id %}">Play</a> </td>
-            <td> <a href="{% url 'staff:stop' computer.id %}">Stop</a> </td>
+            <td> 
+                {% if computer.is_active %}
+                    Playing
+                {% else %}
+                    <a href="{% url 'staff:play' computer.id %}">Play</a> </td>
+                {% endif %}
+            <td> 
+                {% if not computer.is_active %}
+                    Not Playing
+                {% else %}
+                    <a href="{% url 'staff:stop' computer.id %}">Stop</a> </td>
+                {% endif %}
         </tr>
     {% endfor %}
 </table>
